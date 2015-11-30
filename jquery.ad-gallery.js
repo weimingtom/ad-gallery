@@ -473,12 +473,12 @@
                 $(this).find('div').hide();
             }).click(function() {
                 if ($(this).is('.ad-next')) {
-                    context.nextImage();
+					context.nextImage();
                     context.slideshow.stop();
-                } else {
+				} else {
                     context.prevImage();
                     context.slideshow.stop();
-                }
+				}
             }).find('div').css('opacity', 0.7);
         },
 
@@ -692,8 +692,11 @@
         },
 
         _afterShow: function() {
-            this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
-            if (!this.settings.cycle) {
+			//this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
+			//FIXME:
+            this._update_gallery_info();
+				
+			if (!this.settings.cycle) {
                 // Needed for IE
                 this.prev_link.show().css('height', this.image_wrapper_height);
                 this.next_link.show().css('height', this.image_wrapper_height);
@@ -714,6 +717,20 @@
             }
             this.fireCallback(this.settings.callbacks.afterImageVisible);
         },
+		
+		//FIXME:
+        _update_gallery_info: function() {
+			var strInfo = '<ol id="focus" class="focus" style="display: block;">';
+			for (var idxInfo = 0; idxInfo < this.images.length; idxInfo++) {
+				if (idxInfo == this.current_index) {
+					strInfo += '<li><a href="javascript:;" class="active">'+(idxInfo+1)+'</a></li>';
+				} else {
+					strInfo += '<li><a href="javascript:;" class="">'+(idxInfo+1)+'</a></li>';
+				}
+			}
+			strInfo += '</ol>';
+			this.gallery_info.html(strInfo);
+		},
         
         fireCallback: function(fn) {
             if ($.isFunction(fn)) {
@@ -751,7 +768,9 @@
             link.data("ad-i", i);
             this._initLink(link);
             this.images[i] = context._createImageData(link, image_url);
-            this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
+            //this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
+			//FIXME:
+            this._update_gallery_info();
         },
         
         removeImage: function(index) {
@@ -765,7 +784,9 @@
             this.thumbs_wrapper_width -= thumb_width;
             thumb_link.remove();
             this._setThumbListWidth(this.thumbs_wrapper_width);
-            this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
+            //this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
+			//FIXME:
+            this._update_gallery_info();
             this.thumbs_wrapper.find('a').each(function(i) {
                 $(this).data("ad-i", i);
             });

@@ -18,6 +18,7 @@
     top: 0;
     overflow: hidden;
     z-index: 9;
+    cursor:pointer;
 }
 .ad-gallery .ad-image-wrapper .ad-image a img {
     border: 0;
@@ -83,7 +84,9 @@
     height: 20px;
 }
 .ad-gallery .ad-info {
-    float: left;
+    float: right;
+    /*text-align:center;*/
+    font-size:36px;
 }
 .ad-gallery .ad-slideshow-controls {
     float: right;
@@ -156,4 +159,51 @@
     position: absolute;
     left: -9000px;    
     top: -9000px; 
+}
+
+/*http://www.5icool.org/a/201307/982.html*/
+.ad-gallery .focus {
+    height: 16px;
+    line-height: 16px;
+    overflow: hidden;
+    float: right;
+    display: none;
+    position: relative;
+    right: 0;
+    top: 50%;
+    /*margin-top: -8px;*/
+}
+.ad-gallery ol, .ad-gallery ul {
+    list-style: none;
+}
+.ad-gallery .focus li {
+    float: left;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    padding-left: 5px;
+}
+.ad-gallery ul, .ad-gallery li {
+    padding: 0;
+    margin: 0;
+}
+.ad-gallery .focus a.active {
+    background-color: #ff9010;
+}
+.ad-gallery .focus a {
+    background-color: #b4b4b4;
+}
+.ad-gallery .focus a {
+    font-family: arial;
+}
+.ad-gallery .focus a {
+    color: #ffffff;
+}
+.ad-gallery .focus a {
+    display: block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    font-size: 12px;
 }

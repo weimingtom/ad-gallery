@@ -1,4 +1,4 @@
-# ad-gallery
+﻿# ad-gallery
 
 from http://adgallery.codeplex.com/
 
