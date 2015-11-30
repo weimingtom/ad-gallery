@@ -22,6 +22,7 @@ A highly customizable gallery/showcase plugin for jQuery.
 
 ## my mod  
 Adding focus number, by weimingtom.  
+Test URL: http://weimingtom.github.io/ad-gallery/  
 ![Screenshot](/screenshot_20151130171225.jpg)  
 
 ## options
