@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ad-gallery demo</title>
+    <link rel="stylesheet" type="text/css" href="jquery.ad-gallery.css">
+<style type="text/css">
+* {
+    margin: 0;
+    padding: 0;  
+    font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Verdana,Arial,sans-serif;
+    font-size: 12px;  
+    color: #333;
+    line-height: 140%;
+}
+body {
+    padding: 30px;
+}
+p {
+    padding: 10px 0 20px 0; 
+}
+#gallery {
+    padding: 10px;
+    background: #E1EEF5;
+}
+</style> 
+</head>
+<body>
+    <div id="gallery" class="ad-gallery">
+        <div class="ad-image-wrapper"></div>
+        <div class="ad-controls"></div>
+        <div class="ad-nav" style="display:none;">            
+            <div class="ad-thumbs">
+                <ul class="ad-thumb-list">
+                    <li>
+                        <a href="image/1.jpg">
+                            <img src="image/1.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="image/10.jpg">
+                            <img src="image/10.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="image/11.jpg">
+                            <img src="image/11.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="image/12.jpg">
+                            <img src="image/12.jpg" >
+                        </a>
+                    </li>
+                    <li>
+                        <a href="image/13.jpg">
+                            <img src="image/13.jpg">
+                        </a>
+                        </li>
+                    <li>
+                        <a href="image/14.jpg">
+                            <img src="image/14.jpg">
+                        </a>
+                        </li>
+                    <li>
+                        <a href="image/2.jpg" id="t2">
+                            <img src="image/2.jpg">
+                        </a>
+                        </li>
+                    <li>
+                        <a href="image/3.jpg">
+                            <img src="image/3.jpg">
+                        </a>
+                        </li>
+                    <li>
+                        <a href="image/4.jpg">
+                            <img src="image/4.jpg">
+                        </a>
+                        </li>
+                    <li>
+                        <a href="image/5.jpg">
+                            <img src="image/5.jpg">
+                        </a>
+                        </li>
+                    <li>
+                        <a href="image/6.jpg">
+                            <img src="image/6.jpg">
+                        </a>
+                    </li>
+                </ul>
+            </div>           
+        </div>
+    </div>
+<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="jquery.ad-gallery.js"></script>
+<script type="text/javascript">
+$(function() {
+    var gallerys = $('#gallery').adGallery({
+        width: 800,
+        height: 700,
+        scroll_jump: 0,
+        loader_image: 'image/loader.gif',
+        slideshow: {
+			enable: false
+		}
+    });
+	$(".ad-gallery").on("click", ".ad-image", function() {
+		window.open($(this).find("img").attr("src"), "_blank");
+	});
+	
+	$(".ad-gallery").on("click mouseover", "#focus a", function() {
+		//console.log('here');
+		$("#focus a").removeClass('active');
+		$(this).addClass('active');
+		gallerys[0].showImage(parseInt($(this).text())-1);
+		gallerys[0].slideshow.stop();
+		return false;
+	});
+});
+
+</script>
+</body>
+</html>
