@@ -1,4 +1,4 @@
-﻿# ad-gallery
+# ad-gallery
 
 from http://adgallery.codeplex.com/
 
@@ -19,6 +19,10 @@ A highly customizable gallery/showcase plugin for jQuery.
 - Takes the dimensions of the image container div and scales down images that are larger than it
 - Image is positioned in the middle if it's smaller than the container div
 - Images that are larger than the container are scaled down to fit inside the container
+
+## my mod  
+Adding focus number, by weimingtom.  
+![Screenshot](/screenshot_20151130171225.jpg)  
 
 ## options
 ```javascript
