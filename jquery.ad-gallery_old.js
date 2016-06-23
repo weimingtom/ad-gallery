@@ -2,19 +2,19 @@
     function AdGallery(wrapper, options) {
         var defaults = { 
             loader_image: '../image/loader.gif',
-            width: false,                   // image_wrapper width
-            height: false,                  // image_wrapper height
+            width: false,                   // image_wrapper 的宽度
+            height: false,                  // image_wrapper 的高度
             display_next_and_prev: true,
             display_back_and_forward: true,
             enable_keyboard_move: true,
-            description_wrapper: false,     // description position
+            description_wrapper: false,     // 图片描述显示的位置
             start_at_index: 0,
             update_window_hash: true,  
             animate_first_image: false,                 
             thumb_opacity: 0.7,            
             animation_speed: 400,
             effect: 'slide-hori',           // or 'slide-vert', 'fade', or 'resize', 'none'
-            scroll_jump: 0,                 // If 0, it jumps the width of the container (when click back/forward button scrollLeft's length)
+            scroll_jump: 0,                 // If 0, it jumps the width of the container 每次点击缩略图back/forward按钮时scrollLeft的长度
             cycle: true,
             slideshow: {
                 enable: true,
@@ -29,9 +29,9 @@
                 onStop: false
             },
             hooks: {
-                displayDescription: false   // Description display hook function 
+                displayDescription: false   // 显示图片描述时的钩子函数
             },
-            callbacks: {                    // event callback
+            callbacks: {                    // 事件发生时的回调函数
                 init: false,
                 afterImageVisible: false,
                 beforeImageVisible: false
@@ -157,7 +157,7 @@
             this.nav = this.wrapper.find('.ad-nav');
             this.thumbs_wrapper = this.nav.find('.ad-thumbs');
 
-            this.preloads = $('<div class="ad-preloads"></div>');   // After big picture loaded, put into preloads
+            this.preloads = $('<div class="ad-preloads"></div>');   // 大图加载后放到preloads里
             $(document.body).append(this.preloads);
         },
 
@@ -226,8 +226,9 @@
             }
         },
 
-        
-		//is image loaded, according to two properties: complete and naturalWidth 
+        /*
+         * 判断图片是否加载完毕  根据complete和naturalWidth两个属性判断
+         */
         isImageLoaded: function(img) {
             if (typeof img.complete != 'undefined' && !img.complete) {//////////
                 return false;
@@ -238,12 +239,12 @@
             return true;
         },
 
-        "_initLink": function(link) {
+        _initLink: function(link) {
             var context = this;
             link.click(function() {
                 context.showImage(link.data("ad-i"));
                 context.slideshow.stop();
-                return false;   // prevent event pop up, and cancel default click behavior
+                return false;   // 阻止事件冒泡，同时取消默认点击行为
             }).hover(function() {
                 if (!$(this).is('.ad-active') && context.settings.thumb_opacity < 1) {
                     $(this).find('img').fadeTo(300, 1);
@@ -256,7 +257,7 @@
             });
         },
 
-        "_createImageData": function(thumb_link, image_src) {   
+        _createImageData: function(thumb_link, image_src) {   
             var thumb_img = thumb_link.find("img");
 
             var title = false;
@@ -271,7 +272,7 @@
             } else if (thumb_img.attr('alt') && thumb_img.attr('alt').length) {
                 desc = thumb_img.attr('alt');
             }
-            var link = false;       // outer link of large picture 
+            var link = false;       // 大图的外链
             if (thumb_img.data('ad-link')) {
                 link = thumb_link.data('ad-link');
             } else if (thumb_img.attr('longdesc') && thumb_img.attr('longdesc').length) {
@@ -289,8 +290,10 @@
             };
         },
 
-        //@param function callback Gets fired when the image has loaded, is displaying
-        //                          and it's animation has finished
+        /**
+        * @param function callback Gets fired when the image has loaded, is displaying
+        *                          and it's animation has finished
+        */
         showImage: function(index, callback) {
             if (this.images[index] && !this.in_transition && index != this.current_index) {
                 var context = this;
@@ -355,15 +358,16 @@
             context.preloadImage(i, preloadNext);
         },
 
-        //@param function callback Gets fired when the image has loaded, is displaying
-        //                          and it's animation has finished
-        //
-        "_showWhenLoaded": function(index, callback) {
+        /**
+         * @param function callback Gets fired when the image has loaded, is displaying
+         *                          and it's animation has finished
+         */
+        _showWhenLoaded: function(index, callback) {
             if (this.images[index]) {
                 var context = this;
                 var image = this.images[index];
                 var img_container = $(document.createElement('div')).addClass('ad-image');
-                // var img_container = $('<div class="ad-image"></div>');   img_container is new 
+                // var img_container = $('<div class="ad-image"></div>');   img_container 为新建的
                 var img = $(new Image()).attr('src', image.image_src);
                 if (image.link) {
                     var link = $('<a href="'+ image.link +'" target="_blank"></a>');
@@ -372,7 +376,7 @@
                 } else {
                     img_container.append(img);
                 }
-                this.image_wrapper.prepend(img_container);      // append new img_container into image_wrapper, then new picture doesn't display (over by new pic)
+                this.image_wrapper.prepend(img_container);      // 将新建的img_container加到image_wrapper中,此时新图片不会显示（被后边的就图片遮盖）
                 var size = this._getContainedImageSize(image.size.width, image.size.height);
                 img.attr('width', size.width);
                 img.attr('height', size.height);
@@ -436,7 +440,7 @@
             }
         },
 
-        "_setThumbListWidth": function(wrapper_width) {
+        _setThumbListWidth: function(wrapper_width) {
             wrapper_width -= 100;   ///?????
             var list = this.nav.find('.ad-thumb-list');
             list.css('width', wrapper_width +'px');
@@ -514,8 +518,7 @@
                     if (has_scrolled > 30 && context.settings.slideshow.stop_on_scroll) {
                         context.slideshow.stop();
                     }
-                    var left = context.thumbs_wrapper.scrollLeft() + 1; // use scrollLeft to implement pic scroll (outter div set width:xxpx;overflow:hidden, inner list set float:left;)
-					//(another method to implement scroll: list absolute pos, when scroll, set left value, notice when init, need set list's width, or scrolling will flash) 
+                    var left = context.thumbs_wrapper.scrollLeft() + 1; // 用scrollLeft实现图片滚动(外层div设置width:xxpx;overflow:hidden,内层list设置float:left;)(另一种实现滚动的方法：list绝对定位，滚动时设置left值，注意初始化时需设置list的宽度否则滚动时会闪烁)
                     if (direction == 'left') {
                         left = context.thumbs_wrapper.scrollLeft() - 1;
                     }
@@ -622,10 +625,11 @@
             return prev;
         },
 
-        // Checks if the image is small enough to fit inside the container
-        // If it's not, shrink it proportionally
-        //
-        "_getContainedImageSize": function(image_width, image_height) {
+        /**
+         * Checks if the image is small enough to fit inside the container
+         * If it's not, shrink it proportionally
+         */
+        _getContainedImageSize: function(image_width, image_height) {
             if (image_height > this.image_wrapper_height) {
                 var ratio = image_width / image_height;
                 image_height = this.image_wrapper_height;
@@ -642,10 +646,11 @@
             };
         },
 
-        // If the image dimensions are smaller than the wrapper, we position
-        // it in the middle anyway
-        //
-        "_centerImage": function(img_container, image_width, image_height) {
+        /**
+         * If the image dimensions are smaller than the wrapper, we position
+         * it in the middle anyway
+         */
+        _centerImage: function(img_container, image_width, image_height) {
             img_container.css('top', '0px');
             if (image_height < this.image_wrapper_height) {
                 var dif = this.image_wrapper_height - image_height;
@@ -658,7 +663,7 @@
             }
         },
 
-        "_getDescription": function(image) {
+        _getDescription: function(image) {
             var desc = false;
             if (image.desc.length || image.title.length) {
                 var title = '';
@@ -668,9 +673,9 @@
                 var desc = '';
                 if (image.desc.length) {
                     desc = '<span>'+ image.desc +'</span>';
-                }
+                };
                 desc = $('<p class="ad-image-description">'+ title + desc +'</p>');
-            }
+            };
             return desc;
         },
 
@@ -683,11 +688,10 @@
             }
             var left = thumb[0].parentNode.offsetLeft;
             left -= (this.nav_display_width / 2) - (thumb[0].offsetWidth / 2);//////////
-            this.thumbs_wrapper.animate({scrollLeft: left +'px'});  // highlight thumb display in the middle of nav
-			
-		},
+            this.thumbs_wrapper.animate({scrollLeft: left +'px'});  // 高亮thumb在nav中居中显示
+        },
 
-        "_afterShow": function() {
+        _afterShow: function() {
 			//this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
 			//FIXME:
             this._update_gallery_info();
@@ -715,7 +719,7 @@
         },
 		
 		//FIXME:
-        "_update_gallery_info": function() {
+        _update_gallery_info: function() {
 			var strInfo = '<ol id="focus" class="focus" style="display: block;">';
 			for (var idxInfo = 0; idxInfo < this.images.length; idxInfo++) {
 				if (idxInfo == this.current_index) {
@@ -796,13 +800,13 @@
                 this.removeImage(i);
             }
         },
-		
+
         addAnimation: function(name, fn) {
             if ($.isFunction(fn)) {
                 this.animations[name] = fn;
             }
-        }
-		
+        },
+
     };
     
     $.fn.adGallery = function(options) {
@@ -904,8 +908,8 @@
             return true;
         },
 
-        //////？？？_next
-        "_next": function() {
+        //////？？？
+        _next: function() {
             var context = this;
             var pre = this.settings.countdown_prefix;
             var su = this.settings.countdown_sufix;
@@ -946,7 +950,7 @@
     function HorizontalSlideAnimation(img_container, direction, desc) {
         var current_left = parseInt(img_container.css('left'), 10);
         if (direction == 'left') {
-            var old_image_left = '-'+ this.image_wrapper_width +'px';   // notice what is 'this' in fun.call(this,...)
+            var old_image_left = '-'+ this.image_wrapper_width +'px';   // 注意this的指代 fun.call(this,...)
             img_container.css('left', this.image_wrapper_width +'px');
         } else {
             var old_image_left = this.image_wrapper_width +'px';
