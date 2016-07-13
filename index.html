@@ -90,9 +90,17 @@ p {
                 </ul>
             </div>           
         </div>
+		<div>
+			<div class="edit" style="margin-top:10px;float:right;">
+				<img src="image/rotate1.gif" id="rotate1" width="30" style="margin-left: 4px;cursor: pointer;">
+				<img src="image/rotate2.gif" id="rotate2" width="30" style="margin-left: 4px;cursor: pointer;">
+			</div>
+			<div style="clear:both;"></div>
+		</div>
     </div>
 <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="jquery.ad-gallery.js"></script>
+<script type="text/javascript" src="jrotate.plugin.js"></script>
 <script type="text/javascript">
 $(function() {
     var gallerys = $('#gallery').adGallery({
@@ -115,6 +123,27 @@ $(function() {
 		gallerys[0].showImage(parseInt($(this).text())-1);
 		gallerys[0].slideshow.stop();
 		return false;
+	});
+	
+	$("#rotate1").on("click", function() {
+		//.find("img")
+		//$("#gallery").find(".ad-image").css('transform', 'rotate(90deg)');
+		var rotate = $("#gallery").find(".ad-image").attr('rotate');
+		rotate = typeof(rotate) === 'undefined' ? 0 : parseInt(rotate);
+		rotate -= 90;
+		$("#gallery").find(".ad-image").attr('rotate', rotate);
+		$("#gallery").find(".ad-image").css('rotate', rotate);
+		//console.log("rotate: " + rotate);
+	});
+	$("#rotate2").on("click", function() {
+		//.find("img")
+		//$("#gallery").find(".ad-image").css('transform', 'rotate(-90deg)')
+		var rotate = $("#gallery").find(".ad-image").attr('rotate');
+		rotate = typeof(rotate) === 'undefined' ? 0 : parseInt(rotate);
+		rotate += 90;
+		$("#gallery").find(".ad-image").attr('rotate', rotate);
+		$("#gallery").find(".ad-image").css('rotate', rotate);
+		//console.log("rotate: " + rotate);
 	});
 });
 
